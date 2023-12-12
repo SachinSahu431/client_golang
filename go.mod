@@ -29,3 +29,5 @@ require (
 )
 
 exclude github.com/prometheus/client_golang v1.12.1
+
+replace github.com/prometheus/common => github.com/ArthurSens/common v0.0.0-20240202142709-6a6b93b6b111
