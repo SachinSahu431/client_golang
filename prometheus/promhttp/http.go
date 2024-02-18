@@ -160,7 +160,7 @@ func HandlerForTransactional(reg prometheus.TransactionalGatherer, opts HandlerO
 		}
 
 		var contentType expfmt.Format
-		if opts.EnableOpenMetrics {
+		if opts.EnableOpenMetrics || opts.OpenMetricsOptions.EnableOpenMetrics {
 			contentType = expfmt.NegotiateIncludingOpenMetrics(req.Header)
 		} else {
 			contentType = expfmt.Negotiate(req.Header)
@@ -181,7 +181,7 @@ func HandlerForTransactional(reg prometheus.TransactionalGatherer, opts HandlerO
 		}
 
 		var enc expfmt.Encoder
-		if opts.EnableOpenMetricsCreatedMetrics {
+		if opts.OpenMetricsOptions.EnableOpenMetricsCreatedMetrics {
 			enc = expfmt.NewEncoder(w, contentType, expfmt.WithCreatedLines())
 		} else {
 			enc = expfmt.NewEncoder(w, contentType)
@@ -375,6 +375,32 @@ type HandlerOpts struct {
 	// a trailing ".0" if they would otherwise look like integer numbers
 	// (which changes the identity of the resulting series on the Prometheus
 	// server).
+	//
+	// Deprecated: Use OpenMetricsOptions.EnableOpenMetrics instead.
+	EnableOpenMetrics bool
+	// OpenMetricsOptions holds settings for the experimental OpenMetrics encoding.
+	// It can be used to enable OpenMetrics encoding and for setting extra options.
+	OpenMetricsOptions OpenMetricsOptions
+	// ProcessStartTime allows setting process start timevalue that will be exposed
+	// with "Process-Start-Time-Unix" response header along with the metrics
+	// payload. This allow callers to have efficient transformations to cumulative
+	// counters (e.g. OpenTelemetry) or generally _created timestamp estimation per
+	// scrape target.
+	// NOTE: This feature is experimental and not covered by OpenMetrics or Prometheus
+	// exposition format.
+	ProcessStartTime time.Time
+}
+
+type OpenMetricsOptions struct {
+	// If true, the experimental OpenMetrics encoding is added to the
+	// possible options during content negotiation. Note that Prometheus
+	// 2.5.0+ will negotiate OpenMetrics as first priority. OpenMetrics is
+	// the only way to transmit exemplars. However, the move to OpenMetrics
+	// is not completely transparent. Most notably, the values of "quantile"
+	// labels of Summaries and "le" labels of Histograms are formatted with
+	// a trailing ".0" if they would otherwise look like integer numbers
+	// (which changes the identity of the resulting series on the Prometheus
+	// server).
 	EnableOpenMetrics bool
 	// If 'EnableOpenMetrics' is true, 'EnableOpenMetricsCreatedMetrics' allows
 	// to add extra '_created' lines for counters, histograms and summaries,
@@ -391,14 +417,6 @@ type HandlerOpts struct {
 	// _created lines will result in increased cardinality and no improvements
 	// in reset detection.
 	EnableOpenMetricsCreatedMetrics bool
-	// ProcessStartTime allows setting process start timevalue that will be exposed
-	// with "Process-Start-Time-Unix" response header along with the metrics
-	// payload. This allow callers to have efficient transformations to cumulative
-	// counters (e.g. OpenTelemetry) or generally _created timestamp estimation per
-	// scrape target.
-	// NOTE: This feature is experimental and not covered by OpenMetrics or Prometheus
-	// exposition format.
-	ProcessStartTime time.Time
 }
 
 // gzipAccepted returns whether the client will accept gzip-encoded content.

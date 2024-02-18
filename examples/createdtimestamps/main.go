@@ -51,8 +51,10 @@ func main() {
 		"/metrics", promhttp.HandlerFor(
 			registry,
 			promhttp.HandlerOpts{
-				EnableOpenMetrics:               true,
-				EnableOpenMetricsCreatedMetrics: true,
+				OpenMetricsOptions: promhttp.OpenMetricsOptions{
+					EnableOpenMetrics:               true,
+					EnableOpenMetricsCreatedMetrics: true,
+				},
 			}),
 	)
 	// To test: curl -H 'Accept: application/openmetrics-text' localhost:8080/metrics
