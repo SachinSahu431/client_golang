@@ -18,12 +18,15 @@ jobs:
 
     strategy:
       matrix:
-        go_version: ["1.20", "1.21", "1.22"]
+        go_version: ${{ fromJSON(steps.read_versions.outputs) }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-
+      - name: Read Go versions from file
+        run: cat supported_go_versions.txt | tr '\n' ' '
+        id: read_versions
+      
       - name: Set up Go ${{ matrix.go_version }}
         uses: actions/setup-go@v5.0.0
         with:
