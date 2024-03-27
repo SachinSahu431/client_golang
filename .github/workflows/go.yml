@@ -12,33 +12,33 @@ permissions:
   contents: read
 
 jobs:
-  read_go_versions:
-    name: Read Go versions
+  get_go_versions:
+    name: Get Go Versions from File
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
+
       - name: Read Go versions from file
-        run: cat supported_go_versions.txt | tr '\n' ' '
         id: read_versions
-      - name: Set output with Go versions
-        run: echo "::set-output name=go_versions_list::$((steps.read_versions.outputs.stdout))"
+        run: |
+          cat supported_go_versions.txt
+    outputs:
+      versions: ${{ steps.read_versions.outputs }}
 
   test:
+    needs: get_go_versions
     name: Tests
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        go_version: ${{  fromJSON(jobs.read_go_versions.outputs.go_versions_list) }}
+        go_version: ${{ steps.get_go_versions.outputs.versions }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-      - name: Read Go versions from file
-        run: cat supported_go_versions.txt | tr '\n' ' '
-        id: read_versions
-      
+
       - name: Set up Go ${{ matrix.go_version }}
         uses: actions/setup-go@v5.0.0
         with:
