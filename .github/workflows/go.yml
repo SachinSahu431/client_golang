@@ -24,7 +24,7 @@ jobs:
         run: |
           cat supported_go_versions.txt
     outputs:
-      versions: ${{ steps.read_versions.outputs }}
+      versions: ${{ steps.read_versions.outputs.split('\n') }}
 
   test:
     needs: get_go_versions
@@ -33,7 +33,7 @@ jobs:
 
     strategy:
       matrix:
-        go_version: ${{ needs.get_go_versions.outputs.versions }}
+        go_version: ${{ needs.get_go_versions.outputs.versions.split('\n') }}
 
     steps:
       - name: Checkout code
