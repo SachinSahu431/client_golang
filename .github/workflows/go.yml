@@ -33,7 +33,7 @@ jobs:
 
     strategy:
       matrix:
-        go_version: ${{ steps.get_go_versions.outputs.versions }}
+        go_version: ${{ needs.get_go_versions.outputs.versions }}
 
     steps:
       - name: Checkout code
