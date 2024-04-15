@@ -18,6 +18,10 @@ description: 'Install release-notes from Kubernetes SIG Release in your runner'
 branding:
   icon: 'package'
   color: 'blue'
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
 
 runs:
   using: "composite"
