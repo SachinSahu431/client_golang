@@ -31,4 +31,10 @@ jobs:
             cd "${temp_dir}/"  && \
             go build ./cmd/release-notes/ && \
             mv release-notes /usr/local/bin/ && \
-            release-notes --start-sha aec0f06654072f00b0dfa8f17665c3ad9611fa72 --end-sha f1f104c6326154a6b75799a62b0d35f4dc2c0013 --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --markdown-links yes
+            # release-notes --start-sha ${{ steps.get_sha.outputs.commit_sha }}  --end-sha f1f104c6326154a6b75799a62b0d35f4dc2c0013 --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --markdown-links yes
+            release-notes --start-sha aec0f06654072f00b0dfa8f17665c3ad9611fa72 --end-sha f1f104c6326154a6b75799a62b0d35f4dc2c0013 --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --markdown-links yes > draft_changelog.md && \
+            git config --global user.email "actions@github.com" && \
+            git config --global user.name "GitHub Actions" && \
+            git add draft_changelog.md && \
+            git commit -m "Add draft changelog" && \
+            git push origin main
