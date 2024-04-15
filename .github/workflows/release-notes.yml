@@ -1,0 +1,36 @@
+name: Build and Run Release Notes
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-run-release-notes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code onto GOPATH
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+          check-latest: true
+
+      - name: Build and Install Release Notes
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          temp_dir="$(mktemp -d)" && \
+            git clone --depth=1 -q https://github.com/kubernetes/release.git "${temp_dir}" && \
+            cd "${temp_dir}/"  && \
+            go build ./cmd/release-notes/ && \
+            mv release-notes /usr/local/bin/ && \
+            # release-notes --start-sha ${{ steps.get_sha.outputs.commit_sha }}  --end-sha f1f104c6326154a6b75799a62b0d35f4dc2c0013 --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --markdown-links yes
+            release-notes --start-sha aec0f06654072f00b0dfa8f17665c3ad9611fa72 --end-sha f1f104c6326154a6b75799a62b0d35f4dc2c0013 --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --markdown-links yes --output=CHANGELOG_NEW.md
+            cat CHANGELOG_NEW.md
