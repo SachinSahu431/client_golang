@@ -8,11 +8,6 @@ permissions:
   issues: write
   contents: read
 
-triage:
-    runs-on: ubuntu-latest
-    steps:
-
-
 jobs:
   triage:
     runs-on: ubuntu-latest
