@@ -1,10 +1,7 @@
-name: Build and Run Release Notes
+name: Read Changelog from PR Description
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 

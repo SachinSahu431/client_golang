@@ -1,0 +1,13 @@
+CLEANUP:
+  - '/^chore:/'
+BUGFIX:
+  - '/^fix:/'
+ENHANCEMENT:
+  - '/^enhancement:/'
+FEATURE:
+  - '/^feat:/'
+  - '/^feature:/'
+CHANGE:
+  - '/^docs:/'
+release-note-none:
+  - '/^NONE:/'
