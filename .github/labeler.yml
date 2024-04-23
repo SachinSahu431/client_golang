@@ -1,13 +1,45 @@
-CLEANUP:
-  - '/^chore:/'
-BUGFIX:
-  - '/^fix:/'
-ENHANCEMENT:
-  - '/^enhancement:/'
-FEATURE:
-  - '/^feat:/'
-  - '/^feature:/'
-CHANGE:
-  - '/^docs:/'
-release-note-none:
-  - '/^NONE:/'
+# auto-labeler
+
+# enable auto-labeler on issues, prs, or both.
+enable:
+  prs: true
+
+comments:
+  prs: |
+    Thanks for the contribution!
+    I have applied any labels matching special text in your title and description.
+
+    Please review the labels and make any necessary changes.
+
+# Labels is an object where:
+# - keys are labels
+# - values are objects of { include: [ pattern ], exclude: [ pattern ] }
+#    - pattern must be a valid regex, and is applied globally to
+#      title + description of issues and/or prs (see enabled config above)
+#    - 'include' patterns will associate a label if any of these patterns match
+#    - 'exclude' patterns will ignore this label if any of these patterns match
+labels:
+  'kind/CLEANUP':
+    include:
+      - '(chore|cleanup):'
+    exclude: []
+  'kind/BUGFIX':
+    include:
+      - '(fix|bugfix):'
+    exclude: []
+  'kind/ENHANCEMENT':
+    include:
+      - 'enhancement:'
+    exclude: []
+  'kind/FEATURE':
+    include:
+      - '(feat|feature):'
+    exclude: []
+  'kind/CHANGE':
+    include:
+      - 'docs:'
+    exclude: []
+  'release-note-none':
+    include:
+      - '(NONE|release-note-none)'
+    exclude: []
