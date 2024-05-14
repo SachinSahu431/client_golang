@@ -22,6 +22,7 @@ jobs:
       - name: Read Version from File
         id: read-version
         run: |
+          git fetch --tags
           echo "Reading version from VERSION file..."
           VERSION=$(cat VERSION)
           # echo "::set-output name=version::$VERSION"
