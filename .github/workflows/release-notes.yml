@@ -55,7 +55,7 @@ jobs:
             cat CHANGELOG_NEW.md
       
       - name: Create Pull Request
-        uses: actions/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v6
         with:
           title: "Automatic Changelog"
           body: |
