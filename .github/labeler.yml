@@ -21,23 +21,23 @@ comments:
 labels:
   'kind/CLEANUP':
     include:
-      - '(chore|cleanup):'
+      - '(/kind (chore|cleanup))|(chore|cleanup):'
     exclude: []
   'kind/BUGFIX':
     include:
-      - '(fix|bugfix):'
+      - '(/kind (fix|bugfix))|(fix|bugfix):'
     exclude: []
   'kind/ENHANCEMENT':
     include:
-      - 'enhancement:'
+      - '(/kind enhancement)|enhancement:'
     exclude: []
   'kind/FEATURE':
     include:
-      - '(feat|feature):'
+      - '(/kind (feat|feature))|(feat|feature):'
     exclude: []
   'kind/CHANGE':
     include:
-      - 'docs:'
+      - '(/kind docs)|docs:'
     exclude: []
   'release-note-none':
     include:
