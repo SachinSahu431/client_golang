@@ -1,25 +1,25 @@
-name: PR Labeler
 
-on:
+name: auto-labeler
+on: 
   pull_request_target:
-    types: [opened, edited]
+    types: [opened, edited, synchronize]
 
 permissions:
-  issues: write
-  contents: read
-
+  # Setting up permissions in the workflow to limit the scope of what it can do. Optional!
+  contents: read # the config file
+  issues: write # for labeling issues (on: issues)
+  pull-requests: write # for labeling pull requests (on: pull_request_target or on: pull_request)
+  statuses: write # to generate status
+  checks: write # to generate status
+    
 jobs:
-  triage:
+
+  labeler:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v4
-    - name: Use GitHub Issue Labeler
-      uses: github/issue-labeler@v3.3
+    - name: Check Labels
+      id: labeler
+      uses: jimschubert/labeler-action@v1
       with:
-        configuration-path: .github/labeler.yml
-        enable-versioned-regex: 0
-        include-body: 1
-        sync-labels: 1
-        repo-token: ${{ github.token }}
-        LOG_LEVEL: "debug"
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
