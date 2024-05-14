@@ -22,35 +22,27 @@ jobs:
       - name: Read Version from File
         id: read-version
         run: |
-          git fetch --tags
           echo "Reading version from VERSION file..."
           VERSION=$(cat VERSION)
           # echo "::set-output name=version::$VERSION"
-          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "{version}=$VERSION" >> $GITHUB_OUTPUT
 
-      # Get the tag name based on the version
       - name: Get Tag Name
         id: get-tag
         run: |
-          TAG_NAME="v${{ steps.read-version.outputs.VERSION }}"
+          TAG_NAME="v${{ steps.read-version.outputs.version }}"
           # echo "::set-output name=tag_name::$TAG_NAME"
-          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "{tag_name}=$TAG_NAME" >> $GITHUB_OUTPUT
 
       - name: Get Start SHA
         id: get-start-sha
         run: |
-          TAG_NAME="${{ steps.get-tag.outputs.TAG_NAME }}"
+          TAG_NAME="${{ steps.get-tag.outputs.tag_name }}"
           START_SHA=$(git rev-list -n 1 "$TAG_NAME")
           # echo "::set-output name=start_sha::$START_SHA"
-          echo "START_SHA=$START_SHA" >> $GITHUB_OUTPUT
+          echo "{start_sha}=$START_SHA" >> $GITHUB_OUTPUT
       
-      - name: Get End SHA
-        id: get-end-sha
-        run: |
-          END_SHA=$(git rev-parse main)
-          echo "END_SHA=$END_SHA" >> $GITHUB_OUTPUT
-          
-      - name: Build and Install Release Notes Tool
+      - name: Build and Install Release Notes
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -59,5 +51,14 @@ jobs:
             cd "${temp_dir}/"  && \
             go build ./cmd/release-notes/ && \
             mv release-notes /usr/local/bin/ && \
-            release-notes --start-sha ${{ steps.get-start-sha.outputs.START_SHA }} --end-sha ${{ steps.get-end-sha.outputs.END_SHA }} --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --markdown-links yes --output=CHANGELOG_NEW.md >> release_notes_log.txt
+            release-notes --start-sha ${{ steps.get-start-sha.outputs.START_SHA }} --end-sha $(git rev-parse main) --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --markdown-links yes --output=CHANGELOG_NEW.md >> release_notes_log.txt
             cat CHANGELOG_NEW.md
+      
+      - name: Create Pull Request
+        uses: actions/create-pull-request@v6
+        with:
+          title: "Automatic Changelog"
+          body: |
+            This PR contains changelog for commits made after release of version ${{ steps.read-version.outputs.VERSION }}.
+          base: main
+          changes: CHANGELOG_NEW.md
