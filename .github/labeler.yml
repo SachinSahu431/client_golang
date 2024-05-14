@@ -41,5 +41,5 @@ labels:
     exclude: []
   'release-note-none':
     include:
-      - '(NONE|release-note-none|release-notes-none)'
+      - '(/kind (NONE|release-note-none|release-notes-none))|(NONE|release-note-none|release-notes-none)'
     exclude: []
