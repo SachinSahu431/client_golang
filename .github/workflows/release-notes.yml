@@ -53,13 +53,5 @@ jobs:
             cd "${temp_dir}/"  && \
             go build ./cmd/release-notes/ && \
             mv release-notes /usr/local/bin/ && \
-            release-notes \
-            --start-sha ${{ steps.get-start-sha.outputs.START_SHA }} \
-            --end-sha $(git rev-parse main) \
-            --org SachinSahu431 \
-            --repo client_golang \
-            --branch main \
-            --required-author "" \
-            --debug \
-            --markdown-links yes \
-            --output=CHANGELOG_NEW.md >> release_notes_log.txt
+            release-notes --start-sha ${{ steps.get-start-sha.outputs.START_SHA }} --end-sha $(git rev-parse main) --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --markdown-links yes --output=CHANGELOG_NEW.md >> release_notes_log.txt
+            cat CHANGELOG_NEW.md
