@@ -42,3 +42,4 @@ labels:
   'release-note-none':
     include:
       - '(NONE|release-note-none|release-notes-none)'
+    exclude: []
