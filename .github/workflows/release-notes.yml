@@ -19,6 +19,30 @@ jobs:
           go-version: '1.21'
           check-latest: true
 
+      - name: Read Version from File
+        id: read-version
+        run: |
+          echo "Reading version from VERSION file..."
+          VERSION=$(cat VERSION)
+          # echo "::set-output name=version::$VERSION"
+          echo "{version}=$VERSION" >> $GITHUB_OUTPUT
+
+      # Get the tag name based on the version
+      - name: Get Tag Name
+        id: get-tag
+        run: |
+          TAG_NAME="v${{ steps.read-version.outputs.version }}"
+          # echo "::set-output name=tag_name::$TAG_NAME"
+          echo "{tag_name}=$TAG_NAME" >> $GITHUB_OUTPUT
+
+      - name: Get Start SHA
+        id: get-start-sha
+        run: |
+          TAG_NAME="${{ steps.get-tag.outputs.tag_name }}"
+          START_SHA=$(git rev-list -n 1 "$TAG_NAME")
+          # echo "::set-output name=start_sha::$START_SHA"
+          echo "{start_sha}=$START_SHA" >> $GITHUB_OUTPUT
+      
       - name: Build and Install Release Notes
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,5 +53,5 @@ jobs:
             go build ./cmd/release-notes/ && \
             mv release-notes /usr/local/bin/ && \
             # release-notes --start-sha ${{ steps.get_sha.outputs.commit_sha }}  --end-sha f1f104c6326154a6b75799a62b0d35f4dc2c0013 --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --markdown-links yes
-            release-notes --start-sha aec0f06654072f00b0dfa8f17665c3ad9611fa72 --end-sha f1f104c6326154a6b75799a62b0d35f4dc2c0013 --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --markdown-links yes --output=CHANGELOG_NEW.md
+            release-notes --start-sha ${{ steps.get-start-sha.outputs.start_sha }} --end-sha $(git rev-parse main) --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --markdown-links yes --output=CHANGELOG_NEW.md
             cat CHANGELOG_NEW.md
