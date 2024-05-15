@@ -59,7 +59,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             ./generate-changelog.sh
-            cat CHANGELOG_NEW.md
+            cat CHANGELOG.md
           # temp_dir="$(mktemp -d)" && \
           #   git clone --depth=1 -q https://github.com/kubernetes/release.git "${temp_dir}" && \
           #   cd "${temp_dir}/"  && \

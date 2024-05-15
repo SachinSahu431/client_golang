@@ -17,7 +17,7 @@ temp_dir="$(mktemp -d)" && \
   mv release-notes /usr/local/bin/
 
 release-notes \
-  --start-rev "${TAG_NAME}" \
+  --start-rev "${START_SHA}" \
   --end-sha "${END_SHA}" \
   --org SachinSahu431 \
   --repo client_golang \
