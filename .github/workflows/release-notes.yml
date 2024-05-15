@@ -59,7 +59,7 @@ jobs:
             cd "${temp_dir}/"  && \
             go build ./cmd/release-notes/ && \
             mv release-notes /usr/local/bin/ && \
-            release-notes --start-sha ${{ steps.get-start-sha.outputs.START_SHA }} --end-sha ${{ steps.get-end-sha.outputs.END_SHA }} --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --dependencies=false --markdown-links yes --go-template go-template:"${{ROOT}}/.github/changelog-template.tpl" --output=CHANGELOG_NEW.md
+            release-notes --start-sha ${{ steps.get-start-sha.outputs.START_SHA }} --end-sha ${{ steps.get-end-sha.outputs.END_SHA }} --org SachinSahu431 --repo client_golang --branch main --required-author "" --debug --dependencies=false --markdown-links yes --go-template go-template:"${{ env.ROOT }}/.github/changelog-template.tpl" --output=CHANGELOG_NEW.md
             cat CHANGELOG_NEW.md
            
       - name: Create Pull Request
