@@ -1,8 +1,6 @@
 {{- $CurrentRevision := .CurrentRevision -}}
 {{- $PreviousRevision := .PreviousRevision -}}
 
-## [UNRELEASED]
-
 {{with .NotesWithActionRequired -}}
 ## Urgent Upgrade Notes 
 

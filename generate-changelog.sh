@@ -31,4 +31,5 @@ release-notes \
 
 cat "CHANGELOG_NEW.md"
 
-mv "CHANGELOG_NEW.md" ${CURR_DIR}/
+# append new changelog entries to Unreleased section
+sed "/## Unreleased/r CHANGELOG_NEW.md" "${CURR_DIR}/CHANGELOG.md" > "CHANGELOG_TMP.md" && mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"
