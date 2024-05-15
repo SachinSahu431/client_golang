@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git fetch --tags
+
 CURR_DIR=$(pwd)
 
 VERSION=$(cat VERSION)
