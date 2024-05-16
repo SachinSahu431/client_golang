@@ -10,9 +10,9 @@
 {{end}}
 
 {{- if .Notes -}}
-{{ range $notes := .Notes }}
-{{ range $note := .NoteEntries }}
-- [{{ $notes.Kind }}] {{ $note }}
-{{ end }}
-{{ end }}
+{{- range $notes := .Notes -}}
+{{range $note := .NoteEntries}}
+* [{{- $notes.Kind }}] {{$note}}
+{{- end -}}
+{{- end -}}
 {{- end -}}

@@ -27,7 +27,6 @@ release-notes \
   --required-author "" \
   --debug \
   --dependencies=false \
-  --markdown-links yes \
   --output="CHANGELOG_NEW.md" \
   --go-template "go-template:${CURR_DIR}/changelog-template.tpl"
 
