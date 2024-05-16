@@ -22,30 +22,24 @@ labels:
   'kind/CLEANUP':
     include:
       - '(/kind (chore|cleanup))|(chore|cleanup):'
-    exclude:
-      - '<!--([\s\S]*?)-->'
+    exclude: []
   'kind/BUGFIX':
     include:
       - '(/kind (fix|bugfix))|(fix|bugfix):'
-    exclude:
-      - '<!--([\s\S]*?)-->'
+    exclude: []
   'kind/ENHANCEMENT':
     include:
       - '(/kind enhancement)|enhancement:'
-    exclude:
-      - '<!--([\s\S]*?)-->'
+    exclude: []
   'kind/FEATURE':
     include:
       - '(/kind (feat|feature))|(feat|feature):'
-    exclude:
-      - '<!--([\s\S]*?)-->'
+    exclude: []
   'kind/CHANGE':
     include:
       - '(/kind docs)|docs:'
-    exclude:
-      - '<!--([\s\S]*?)-->'
+    exclude: []
   'release-note-none':
     include:
       - '(/kind (NONE|release-note-none|release-notes-none))|(NONE|release-note-none|release-notes-none)'
-    exclude:
-      - '<!--([\s\S]*?)-->'
+    exclude: []
