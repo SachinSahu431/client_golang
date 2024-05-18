@@ -10,7 +10,7 @@ TAG_NAME="v${VERSION}"
 # Get the start SHA based on the tag
 START_SHA=$(git rev-list -n 1 "${TAG_NAME}")
 # Get the end SHA (latest commit on main branch)
-END_SHA=$(git rev-parse main)
+END_SHA=$(git rev-parse HEAD)
 
 temp_dir="$(mktemp -d)" && \
   git clone --depth=1 -q https://github.com/kubernetes/release.git "${temp_dir}" && \
