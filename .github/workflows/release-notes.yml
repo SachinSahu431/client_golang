@@ -3,7 +3,7 @@ name: Raise PR with Changelog
 on:
   push:
     branches:
-      - 'release-.*'
+      - "release-*"
 
 jobs:
   build-and-run-release-notes:
