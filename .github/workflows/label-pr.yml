@@ -2,7 +2,7 @@ name: PR-auto-labeler
 
 on: 
   pull_request_target:
-    types: [opened, edited, synchronize]
+    types: [labeled, unlabeled, opened, edited, synchronize]
 
 permissions:
   # Setting up permissions in the workflow to limit the scope of what it can do. Optional!
@@ -23,3 +23,9 @@ jobs:
       uses: jimschubert/labeler-action@v1
       with:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Enforce Required Labels
+      uses: yogevbd/enforce-label-action@2.1.0 
+      with:
+        REQUIRED_LABELS_ANY: "chore,cleanup,fix,bugfix,enhancement,feat,feature,docs,NONE,release-note-none,release-notes-none,kind/CLEANUP,kind/BUGFIX,kind/ENHANCEMENT,kind/FEATURE,kind/CHANGE"
+        REQUIRED_LABELS_ANY_DESCRIPTION: "Select at least one label ['chore', 'cleanup', 'fix', 'bugfix', 'enhancement', 'feature', 'docs', 'release-note-none', 'kind/CLEANUP', 'kind/BUGFIX', 'kind/ENHANCEMENT', 'kind/FEATURE', 'kind/CHANGE']"
+          
