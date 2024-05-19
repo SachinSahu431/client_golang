@@ -7,10 +7,22 @@ CURR_DIR=$(pwd)
 VERSION=$(cat VERSION)
 TAG_NAME="v${VERSION}"
 
-# Get the start SHA based on the tag
-START_SHA=$(git rev-list -n 1 "${TAG_NAME}")
-# Get the end SHA (latest commit on main branch)
-END_SHA=$(git rev-parse HEAD)
+MANUAL_START_SHA=$1
+MANUAL_END_SHA=$2
+
+# Get the start SHA based on the tag, if not manually provided
+if [ -z "$MANUAL_START_SHA" ]; then
+  START_SHA=$(git rev-list -n 1 "${TAG_NAME}")
+else
+  START_SHA=$MANUAL_START_SHA
+fi
+
+# Get the end SHA (latest commit on main branch), if not manually provided
+if [ -z "$MANUAL_END_SHA" ]; then
+  END_SHA=$(git rev-parse HEAD)
+else
+  END_SHA=$MANUAL_END_SHA
+fi
 
 temp_dir="$(mktemp -d)" && \
   git clone --depth=1 -q https://github.com/kubernetes/release.git "${temp_dir}" && \
@@ -32,5 +44,5 @@ release-notes \
 
 cat "CHANGELOG_NEW.md"
 
-# append new changelog entries to Unreleased section
+# Append new changelog entries to Unreleased section
 sed "/## Unreleased/r CHANGELOG_NEW.md" "${CURR_DIR}/CHANGELOG.md" > "CHANGELOG_TMP.md" && mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"

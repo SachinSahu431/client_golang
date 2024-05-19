@@ -12,7 +12,9 @@
 {{- if .Notes -}}
 {{- range $notes := .Notes -}}
 {{range $note := .NoteEntries}}
-* [{{- $notes.Kind }}] {{$note}}
+{{- if ne $notes.Kind "Uncategorized" }}
+  * [{{- $notes.Kind }}] {{$note}}
+{{- end }}
 {{- end -}}
 {{- end -}}
 {{- end -}}
