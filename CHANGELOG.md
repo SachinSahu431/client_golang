@@ -1,5 +1,21 @@
 ## Unreleased
-
+* [BUGFIX] Bugfix: Improve labelling workflow (#13, @SachinSahu431)
+* [DOCS] Fix broken readme link and update documentation (#6, @SachinSahu431)
+* [CHORE] Fix linting of README file (#7, @SachinSahu431)
+* [FEATURE] Add new action file to generate release notes (#9, @SachinSahu431)
+* [FEATURE] Auto add labels from PR description (#10, @SachinSahu431)
+* [FEATURE] Feature: Add custom labels (#12, @SachinSahu431)
+* [FEATURE] Now PR will be raised for changelog file (#14, @SachinSahu431)
+* [FEATURE] Support adding labels based on PR description (#18, @SachinSahu431)
+* [FEATURE] Test multiline changelog entry 
+  - add a new file
+  - line 1
+  - line 2 (#8, @SachinSahu431)
+* [Uncategorized] Flush()
+  FlushError() error // alternative Flush returning an error Hijack() (net.Conn, *bufio.ReadWriter, error)
+  SetReadDeadline(deadline time.Time) error
+  SetWriteDeadline(deadline time.Time) error
+  EnableFullDuplex() error (#1480, @igor-drozdov)
 ## 1.19.0 / 2023-02-27
 
 The module `prometheus/common v0.48.0` introduced an incompatibility when used together with client_golang (See https://github.com/prometheus/client_golang/pull/1448 for more details). If your project uses client_golang and you want to use `prometheus/common v0.48.0` or higher, please update client_golang to v1.19.0.
