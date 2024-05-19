@@ -14,7 +14,7 @@ permissions:
     
 jobs:
 
-  labeler_job:
+  labeler:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,7 @@ jobs:
       with:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-  enforcer_job:
+  enforcer:
     needs: [ labeler ]
     runs-on: ubuntu-latest
     steps:
