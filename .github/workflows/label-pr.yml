@@ -24,8 +24,15 @@ jobs:
       with:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+  refresh-cache:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: 'main'
+
   enforcer:
-    needs: [ labeler ]
+    needs: [ refresh-cache, labeler ]
     runs-on: ubuntu-latest
     steps:
     - name: Enforce Required Labels
