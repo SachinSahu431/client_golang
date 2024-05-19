@@ -43,7 +43,7 @@ jobs:
 
     - name: Add workflow result as comment on PR
       uses: actions/github-script@v6
-      if: failure()
+      if: always()
       with:
         script: |
           const name = '${{ github.workflow }}';
