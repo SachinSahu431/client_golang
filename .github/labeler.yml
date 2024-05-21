@@ -1,15 +1,8 @@
-# auto-labeler
+# Config file for pr-auto-label workflow
 
 # enable auto-labeler on issues, prs, or both.
 enable:
   prs: true
-
-comments:
-  prs: |
-    Thanks for the contribution!
-    I have applied any labels matching special text in your title and description.
-
-    Please review the labels and make any necessary changes.
 
 # Labels is an object where:
 # - keys are labels
@@ -19,23 +12,23 @@ comments:
 #    - 'include' patterns will associate a label if any of these patterns match
 #    - 'exclude' patterns will ignore this label if any of these patterns match
 labels:
-  'kind/CLEANUP':
+  'kind/cleanup':
     include:
       - '(/kind (chore|cleanup))|(chore|cleanup):'
     exclude: []
-  'kind/BUGFIX':
+  'kind/bugfix':
     include:
       - '(/kind (fix|bugfix))|(fix|bugfix):'
     exclude: []
-  'kind/ENHANCEMENT':
+  'kind/enhancement':
     include:
       - '(/kind enhancement)|enhancement:'
     exclude: []
-  'kind/FEATURE':
+  'kind/feature':
     include:
       - '(/kind (feat|feature))|(feat|feature):'
     exclude: []
-  'kind/CHANGE':
+  'kind/documentation':
     include:
       - '(/kind docs)|docs:'
     exclude: []
