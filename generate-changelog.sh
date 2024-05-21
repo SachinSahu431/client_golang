@@ -35,7 +35,7 @@ release-notes \
   --end-sha "${END_SHA}" \
   --org SachinSahu431 \
   --repo client_golang \
-  --branch main \
+  --branch main-backup \
   --required-author "" \
   --debug \
   --dependencies=false \
