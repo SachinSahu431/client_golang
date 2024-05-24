@@ -33,7 +33,7 @@ temp_dir="$(mktemp -d)" && \
 release-notes \
   --start-sha "${START_SHA}" \
   --end-sha "${END_SHA}" \
-  --org prometheus \
+  --org SachinSahu431 \
   --repo client_golang \
   --branch main \
   --required-author "" \
