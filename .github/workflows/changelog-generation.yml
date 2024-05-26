@@ -35,7 +35,7 @@ jobs:
       - name: Get Base SHA from Tag
         id: base_sha
         run: |
-          echo "base_sha=$(git rev-list -n 1 "v${{ env.tag_name }}") >> $GITHUB_ENV
+          echo "base_sha=$(git rev-list -n 1 "v${{ env.tag_name }}")" >> $GITHUB_ENV
         continue-on-error: true
 
       - name: Create Pull Request
