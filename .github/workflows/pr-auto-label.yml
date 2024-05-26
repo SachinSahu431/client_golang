@@ -37,7 +37,7 @@ jobs:
             const owner = context.repo.owner
             const repo = context.repo.repo
 
-            const labels = await github.issues.listLabelsForRepo({
+            const labels = await github.issues.getLabel({
               owner,
               repo
             })
