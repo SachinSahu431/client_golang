@@ -1,7 +1,7 @@
 ---
 name: PR-auto-labeler
 
-on: 
+on:
   pull_request_target:
     types: [labeled, unlabeled, opened, edited, synchronize]
 
@@ -11,17 +11,26 @@ permissions:
   pull-requests: write # for labeling pull requests (on: pull_request_target or on: pull_request)
   statuses: write # to generate status
   checks: write # to generate status
-    
+
 jobs:
 
   labeler:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check Labels
-      id: labeler
-      uses: jimschubert/labeler-action@v1
-      with:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Check Labels
+        id: labeler
+        uses: jimschubert/labeler-action@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  dump-context:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Dump GitHub Context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
 # Adjust the configuration in /.github/labeler.yml
