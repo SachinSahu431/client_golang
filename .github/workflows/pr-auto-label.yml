@@ -31,7 +31,9 @@ jobs:
         run: |
           body=$(curl -sSL -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.number }} | jq -r '.body')
           echo "PR Body: $body"
-          echo "BODY=$body" >> $GITHUB_ENV
+          echo "BODY<<EOF" >> $GITHUB_ENV
+          echo "$body" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
       - name: Check for labels in PR body
         run: |
           if [[ ${{ env.BODY }} =~ /kind\ (fix|bugfix|feat|feature|enhancement|change|none|NONE|release-note-none|release-notes-none) ]]; then
