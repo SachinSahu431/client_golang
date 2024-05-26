@@ -24,13 +24,24 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  dump-context:
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Dump GitHub Context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+      
+      - name: Fetch labels using GitHub API
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner
+            const repo = context.repo.repo
+
+            const labels = await github.issues.listLabelsForRepo({
+              owner,
+              repo
+            })
+
+            console.log("Fetched labels:", labels.data.map(label => label.name))
 
 # Adjust the configuration in /.github/labeler.yml
