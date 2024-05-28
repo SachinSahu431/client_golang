@@ -34,7 +34,7 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
       - name: Check for labels in PR body
         run: |
-          if [[ ${{ env.BODY }} =~ (?:^|\n)\/kind\ (fix|bugfix|feat|feature|enhancement|change|none|NONE|release-note-none|release-notes-none) ]] ; then
+          if [[ "${{ env.BODY }}" =~ (?:^|\n)\/kind\ (fix|bugfix|feat|feature|enhancement|change|none|NONE|release-note-none|release-notes-none) ]] ; then
             echo "PR body contains a valid type of change"
           else
             echo "PR body does not contain a valid type of change. Please refer to CONTRIBUTING.md for more information."
