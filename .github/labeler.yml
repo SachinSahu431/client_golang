@@ -14,21 +14,21 @@ enable:
 labels:
   'kind/BUGFIX':
     include:
-      - '/kind (fix|bugfix)'
+      - '(?:^|\n)\/kind (fix|bugfix)'
     exclude: []
   'kind/ENHANCEMENT':
     include:
-      - '/kind enhancement'
+      - '(?:^|\n)\/kind enhancement'
     exclude: []
   'kind/FEATURE':
     include:
-      - '/kind (feat|feature)'
+      - '(?:^|\n)\/kind (feat|feature)'
     exclude: []
   'kind/CHANGE':
     include:
-      - '/kind change'
+      - '(?:^|\n)\/kind change'
     exclude: []
   'release-note-none':
     include:
-      - '/kind (none|NONE|release-note-none|release-notes-none)'
+      - '(?:^|\n)\/kind (none|NONE|release-note-none|release-notes-none)'
     exclude: []

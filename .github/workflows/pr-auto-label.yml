@@ -36,7 +36,7 @@ jobs:
         run: |
           if [[ $(cat <<EOF 
           ${{ env.BODY }} 
-          EOF) =~ /kind\ (fix|bugfix|feat|feature|enhancement|change|none|NONE|release-note-none|release-notes-none) ]] ; then
+          EOF) =~ (?:^|\n)\/kind\s(fix|bugfix|feat|feature|enhancement|change|none|NONE|release-note-none|release-notes-none) ]] ; then
             echo "PR body contains a valid type of change"
           else
             echo "PR body does not contain a valid type of change. Please refer to CONTRIBUTING.md for more information."

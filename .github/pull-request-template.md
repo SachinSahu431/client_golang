@@ -6,7 +6,11 @@ https://github.com/prometheus/client_golang/blob/main/CONTRIBUTING.md#how-to-fil
 
 ### What type of PR is this?
 
-<!-- Format: /kind followed by ONE of the type {fix, bugfix, enhancement, feature, feat, change, release-note-none} -->
+<!-- Format: /kind followed by ONE of the type {fix, bugfix, enhancement, feature, feat, change, release-note-none} 
+
+Example 1: /kind enhancement
+Example 2: /kind NONE
+-->
 
 
 ### Changelog Entry
