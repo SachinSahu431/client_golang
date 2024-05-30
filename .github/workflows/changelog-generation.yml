@@ -5,6 +5,8 @@
     push:
       branches:
         - "release-*"
+      paths:
+        - 'VERSION'
   
   jobs:
     build-and-run-release-notes:
@@ -25,7 +27,14 @@
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
               ./generate-changelog.sh
-              cat CHANGELOG.md
+
+        - name: Update CHANGELOG.md header
+          run: |
+            echo "tag_name=$(cat VERSION)" >> $GITHUB_ENV
+            echo "todays_date=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
+            sed -i "1s/# Unreleased/## ${env.tag_name} - ${env.todays_date}/" CHANGELOG.md
+            cat CHANGELOG.md
+
         - name: Read Tag Name from VERSION File
           id: tag_name
           run: |
