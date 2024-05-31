@@ -32,7 +32,7 @@
           run: |
             echo "tag_name=$(cat VERSION)" >> $GITHUB_ENV
             echo "todays_date=$(date '+%d/%m/%Y')" >> $GITHUB_ENV
-            sed -i '1s/## Unreleased/## ${{ env.tag_name }} \/ ${{ env.todays_date }}/' CHANGELOG.md
+            sed -i "1s/## Unreleased/## '${{ env.tag_name }}' \/ '${{ env.todays_date }}'/" CHANGELOG.md
             cat CHANGELOG.md
 
         - name: Read Tag Name from VERSION File
