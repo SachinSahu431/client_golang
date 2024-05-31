@@ -35,7 +35,7 @@
             echo "Tag Name: ${{ env.tag_name }}"
             echo "Today's Date: ${{ env.todays_date }}"
             NEW_HEADER="## ${{ env.tag_name }} / ${{ env.todays_date }}"
-            sed -i '1s/.*/'"$NEW_HEADER"'/' CHANGELOG.md
+            sed -i '1s|.*|'"$NEW_HEADER"'|' CHANGELOG.md
             cat CHANGELOG.md
 
         - name: Read Tag Name from VERSION File
