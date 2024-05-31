@@ -8,8 +8,6 @@ VERSION=$(cat VERSION)
 TAG_NAME="v${VERSION}"
 
 echo "Current HEAD: $(git rev-parse HEAD)"
-echo "Commit History:"
-git log --oneline
 
 PREVIOUS_VERSION=$(git show HEAD~1:VERSION)
 echo "Previous Tag Version: $PREVIOUS_VERSION"
@@ -53,7 +51,8 @@ cat "CHANGELOG_NEW.md"
 
 # Append new changelog entries to Unreleased section
 if grep -q "## Unreleased" "${CURR_DIR}/CHANGELOG.md"; then
-    sed "/## Unreleased/r CHANGELOG_NEW.md" "${CURR_DIR}/CHANGELOG.md" > "CHANGELOG_TMP.md" && mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"
+    sed "/## Unreleased/r CHANGELOG_NEW.md" "${CURR_DIR}/CHANGELOG.md" > "CHANGELOG_TMP.md" &&
+    mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"
 else
     printf '## Unreleased\n\n' > "CHANGELOG_TMP.md"
     cat CHANGELOG_NEW.md >> "CHANGELOG_TMP.md"
