@@ -29,6 +29,7 @@
               ./generate-changelog.sh
               echo "tag_name=$(cat VERSION)" >> $GITHUB_ENV
               echo "todays_date=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+              echo "prev_tag_name=$(git show HEAD~1:VERSION)" >> $GITHUB_ENV
 
         - name: Update CHANGELOG.md header
           run: |
@@ -38,11 +39,6 @@
             sed -i '1s|.*|'"$NEW_HEADER"'|' CHANGELOG.md
             cat CHANGELOG.md
 
-        - name: Read Tag Name from VERSION File
-          id: tag_name
-          run: |
-            echo "tag_name=$(cat VERSION)" >> $GITHUB_ENV
-            echo "prev_tag_name=$(git show HEAD~1:VERSION)" >> $GITHUB_ENV
         - name: Get Base SHA from Tag
           id: base_sha
           run: |
