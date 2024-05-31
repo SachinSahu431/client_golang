@@ -7,7 +7,12 @@ CURR_DIR=$(pwd)
 VERSION=$(cat VERSION)
 TAG_NAME="v${VERSION}"
 
+echo "Current HEAD: $(git rev-parse HEAD)"
+echo "Commit History:"
+git log --oneline
+
 PREVIOUS_VERSION=$(git show HEAD~1:VERSION)
+echo "Previous Tag Version: $PREVIOUS_VERSION"
 
 MANUAL_START_SHA=$1
 MANUAL_END_SHA=$2
