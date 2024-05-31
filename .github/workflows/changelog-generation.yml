@@ -28,7 +28,7 @@
           run: |
               ./generate-changelog.sh
               echo "tag_name=$(cat VERSION)" >> $GITHUB_ENV
-              echo "todays_date=$(date '+%d/%m/%Y')" >> $GITHUB_ENV
+              echo "todays_date=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
 
         - name: Update CHANGELOG.md header
           run: |
