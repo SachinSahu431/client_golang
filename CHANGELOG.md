@@ -1,4 +1,6 @@
-## 1.19.0 / 2023-02-27
+## 1.20.3 / 2024-05-31
+* [CHANGE] Add PR template for changelog generation. (#46, @SachinSahu431)
+* [ENHANCEMENT] Update gen-chlog.sh file (#47, @SachinSahu431)## 1.19.0 / 2023-02-27
 
 The module `prometheus/common v0.48.0` introduced an incompatibility when used together with client_golang (See https://github.com/prometheus/client_golang/pull/1448 for more details). If your project uses client_golang and you want to use `prometheus/common v0.48.0` or higher, please update client_golang to v1.19.0.
 
