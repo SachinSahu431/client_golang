@@ -52,4 +52,11 @@ release-notes \
 cat "CHANGELOG_NEW.md"
 
 # Append new changelog entries to Unreleased section
-sed "/## Unreleased/r CHANGELOG_NEW.md" "${CURR_DIR}/CHANGELOG.md" > "CHANGELOG_TMP.md" && mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"
+if grep -q "## Unreleased" "${CURR_DIR}/CHANGELOG.md"; then
+    sed "/## Unreleased/r CHANGELOG_NEW.md" "${CURR_DIR}/CHANGELOG.md" > "CHANGELOG_TMP.md" && mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"
+else
+    cat CHANGELOG_NEW.md > "CHANGELOG_TMP.md"
+    cat "${CURR_DIR}/CHANGELOG.md" >> "CHANGELOG_TMP.md"
+    mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"
+fi
+
