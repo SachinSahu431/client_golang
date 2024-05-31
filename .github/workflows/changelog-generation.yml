@@ -39,7 +39,7 @@
             echo "Today's Date: ${{ env.todays_date }}"
             echo "Previous Tag Name: ${{ env.prev_tag_name }}"
             NEW_HEADER="## ${{ env.tag_name }} / ${{ env.todays_date }}"
-            sed -i '1s|.*|'"$NEW_HEADER"'|' CHANGELOG.md
+            sed -i '1s|.*|'"$NEW_HEADER"'\n\n|' CHANGELOG.md
             cat CHANGELOG.md
 
         - name: Get Base SHA from Tag

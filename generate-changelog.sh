@@ -55,8 +55,9 @@ cat "CHANGELOG_NEW.md"
 if grep -q "## Unreleased" "${CURR_DIR}/CHANGELOG.md"; then
     sed "/## Unreleased/r CHANGELOG_NEW.md" "${CURR_DIR}/CHANGELOG.md" > "CHANGELOG_TMP.md" && mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"
 else
-    echo "## Unreleased" > "CHANGELOG_TMP.md"
-    cat CHANGELOG_NEW.md > "CHANGELOG_TMP.md"
+    printf '## Unreleased\n\n' > "CHANGELOG_TMP.md"
+    cat CHANGELOG_NEW.md >> "CHANGELOG_TMP.md"
+    printf '\n\n' >> "CHANGELOG_TMP.md"
     cat "${CURR_DIR}/CHANGELOG.md" >> "CHANGELOG_TMP.md"
     mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"
 fi
