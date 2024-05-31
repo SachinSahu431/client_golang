@@ -27,12 +27,11 @@
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
               ./generate-changelog.sh
+              echo "tag_name=$(cat VERSION)" >> $GITHUB_ENV
+              echo "todays_date=$(date '+%d/%m/%Y')" >> $GITHUB_ENV
 
         - name: Update CHANGELOG.md header
           run: |
-            echo "tag_name=$(cat VERSION)" >> $GITHUB_ENV
-            echo "todays_date=$(date '+%d/%m/%Y')" >> $GITHUB_ENV
-            # print the tag name and todays date
             echo "Tag Name: ${{ env.tag_name }}"
             echo "Today's Date: ${{ env.todays_date }}"
             sed -i "1s/## Unreleased/## '${{ env.tag_name }}' \/ '${{ env.todays_date }}'/" CHANGELOG.md
