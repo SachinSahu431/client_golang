@@ -31,7 +31,7 @@ jobs:
     steps:
       - name: Check Labels
         id: labeler
-        uses: jimschubert/labeler-action@v1
+        uses: jimschubert/labeler-action@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 # Adjust the configuration in /.github/labeler.yml
