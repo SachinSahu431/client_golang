@@ -12,12 +12,11 @@ permissions:
     checks: write # to generate status
 
 jobs:
-  changelog-automation:
-    name: Changelog automation
+  remove-old-labels:
+    name: Remove old PR labels
     runs-on: ubuntu-latest
     steps:
-      - name: Remove old PR labels
-        uses: mondeja/remove-labels-gh-action@v2.0.0
+      - uses: mondeja/remove-labels-gh-action@v2.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           labels: |
@@ -26,13 +25,21 @@ jobs:
             kind/FEATURE
             kind/CHANGE
             release-note-none
-      - name: Add label to PR
+  pr-labeler:
+    runs-on: ubuntu-latest
+    needs: remove-old-labels
+    steps:
+      - name: Check Labels
         id: labeler
         uses: jimschubert/labeler-action@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 # Adjust the configuration in /.github/labeler.yml
 
+  validate-pr-label:
+    runs-on: ubuntu-latest
+    needs: pr-labeler
+    steps:
       - name: Verify Label
         id: preview_label_check
         uses: docker://agilepathway/pull-request-label-checker:latest
