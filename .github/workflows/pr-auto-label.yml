@@ -16,16 +16,6 @@ jobs:
     name: Changelog automation
     runs-on: ubuntu-latest
     steps:
-      - name: Remove old PR labels
-        uses: mondeja/remove-labels-gh-action@v2.0.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          labels: |
-            kind/BUGFIX
-            kind/ENHANCEMENT
-            kind/FEATURE
-            kind/CHANGE
-            release-note-none
       - name: Add label to PR
         id: labeler
         uses: SachinSahu431/labeler-action@v1
