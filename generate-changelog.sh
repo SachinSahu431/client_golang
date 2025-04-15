@@ -7,12 +7,19 @@ CURR_DIR=$(pwd)
 VERSION=$(cat VERSION)
 TAG_NAME="v${VERSION}"
 
+echo "Current HEAD: $(git rev-parse HEAD)"
+echo "Commit History:"
+git log --oneline
+
+PREVIOUS_VERSION=$(git show HEAD~1:VERSION)
+echo "Previous Tag Version: $PREVIOUS_VERSION"
+
 MANUAL_START_SHA=$1
 MANUAL_END_SHA=$2
 
 # Get the start SHA based on the tag, if not manually provided
 if [ -z "$MANUAL_START_SHA" ]; then
-  START_SHA=$(git rev-list -n 1 "${TAG_NAME}")
+  START_SHA=$(git rev-list -n 1 "v${PREVIOUS_VERSION}")
 else
   START_SHA=$MANUAL_START_SHA
 fi
@@ -45,4 +52,11 @@ release-notes \
 cat "CHANGELOG_NEW.md"
 
 # Append new changelog entries to Unreleased section
-sed "/## Unreleased/r CHANGELOG_NEW.md" "${CURR_DIR}/CHANGELOG.md" > "CHANGELOG_TMP.md" && mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"
+if grep -q "## Unreleased" "${CURR_DIR}/CHANGELOG.md"; then
+    sed "/## Unreleased/r CHANGELOG_NEW.md" "${CURR_DIR}/CHANGELOG.md" > "CHANGELOG_TMP.md" && mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"
+else
+    echo "## Unreleased" > "CHANGELOG_TMP.md"
+    cat CHANGELOG_NEW.md > "CHANGELOG_TMP.md"
+    cat "${CURR_DIR}/CHANGELOG.md" >> "CHANGELOG_TMP.md"
+    mv "CHANGELOG_TMP.md" "${CURR_DIR}/CHANGELOG.md"
+fi
